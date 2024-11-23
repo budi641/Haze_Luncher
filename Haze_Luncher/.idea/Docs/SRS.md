@@ -55,6 +55,7 @@ Use Cases:
 **Diagram:**
 
 ![User Registration.png](../Diagrams/Use%20Cases/PNG/User%20Registration.png)
+
 **Actor(s):** User  
 **Main Flow:**
 1. The user navigates to the registration page.
