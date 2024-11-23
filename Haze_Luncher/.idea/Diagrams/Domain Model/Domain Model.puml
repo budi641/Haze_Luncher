@@ -1,0 +1,58 @@
+@startuml
+class User {
+    +userID: int
+    +username: String
+    +email: String
+    +password: String
+    +library: Library
+    +friendsList: List<Friend>
+    +achievements: List<Achievement>
+}
+
+class Game {
+    +gameID: int
+    +name: String
+    +description: String
+    +price: double
+    +genre: String
+}
+
+class Library {
+    +userID: int
+    +games: List<Game>
+}
+
+class Achievement {
+    +achievementID: int
+    +name: String
+    +description: String
+    +gameID: int
+}
+
+class Friend {
+    +friendID: int
+    +friendUsername: String
+}
+
+class Payment {
+    +paymentID: int
+    +amount: double
+    +paymentMethod: String
+    +status: String
+}
+
+class Email {
+    +emailID: int
+    +recipient: String
+    +subject: String
+    +body: String
+}
+
+User "1" --> "1" Library : Owns
+User "1" --> "*" Friend : Has
+User "1" --> "*" Achievement : Earns
+User "*" --> "*" Game : Owns
+Game "1" --> "*" Achievement : Contains
+Payment "*" --> "1" User : Made By
+Payment "1" --> "1" Email : Triggers
+@enduml

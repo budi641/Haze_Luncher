@@ -1,0 +1,21 @@
+@startuml
+actor User
+rectangle "Haze Launcher" {
+    usecase "Enter Username, Email, and Password" as UC1
+    usecase "Validate Input" as UC2
+    usecase "Create User Account" as UC3
+    usecase "Send Confirmation Email" as UC4
+    usecase "Confirm Email" as UC5
+    usecase "Redirect to Login" as UC6
+    usecase "Display Error Message" as UC7
+}
+
+User --> UC1: Provides registration data
+UC1 --> UC2: Passes data for validation
+UC2 --> UC3: If data is valid, create account
+UC2 --> UC7: If data is invalid, display error
+UC3 --> UC4: Send confirmation email
+UC4 --> User: Sends confirmation link
+User --> UC5: Confirms email
+UC5 --> UC6: Redirect to login page
+@enduml

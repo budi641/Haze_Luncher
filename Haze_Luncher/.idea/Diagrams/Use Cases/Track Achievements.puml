@@ -1,0 +1,16 @@
+@startuml
+actor User
+rectangle "Haze Launcher" {
+    usecase "Open Game Library" as UC1
+    usecase "Select Game" as UC2
+    usecase "View Achievements" as UC3
+    usecase "View Unlocked Achievements" as UC4
+    usecase "View Locked Achievements" as UC5
+}
+
+User --> UC1: Opens game library
+UC1 --> UC2: Selects a game
+UC2 --> UC3: Views achievements for the game
+UC3 --> UC4: Shows unlocked achievements
+UC3 --> UC5: Shows locked achievements
+@enduml

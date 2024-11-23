@@ -1,0 +1,15 @@
+@startuml
+actor User
+entity System
+entity Game
+entity Achievement
+entity Library
+
+User -> Game : Interacts with the Game (e.g., completes task)
+Game -> System : Reports Progress
+System -> Achievement : Checks for Unlocked Achievements
+Achievement -> System : Achievement Criteria Met
+System -> Library : Updates User Library with Achievement
+Library -> System : Confirms Update
+System -> User : Displays Unlocked Achievement in Library
+@enduml

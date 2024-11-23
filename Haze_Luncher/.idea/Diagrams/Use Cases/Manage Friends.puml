@@ -1,0 +1,16 @@
+@startuml
+actor User
+rectangle "Haze Launcher" {
+    usecase "Search for Friends" as UC1
+    usecase "Send Friend Request" as UC2
+    usecase "Accept/Reject Friend Request" as UC3
+    usecase "Add to Friends List" as UC4
+    usecase "Notify User of Rejection" as UC5
+}
+
+User --> UC1: Searches for a friend
+UC1 --> UC2: Sends friend request
+UC2 --> UC3: Waits for acceptance or rejection
+UC3 --> UC4: Adds to friend list if accepted
+UC3 --> UC5: Notifies if rejected
+@enduml

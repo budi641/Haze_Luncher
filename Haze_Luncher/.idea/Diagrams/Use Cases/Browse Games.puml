@@ -1,0 +1,14 @@
+@startuml
+actor User
+rectangle "Haze Launcher" {
+    usecase "Browse Game Catalog" as UC1
+    usecase "Search or Filter Games" as UC2
+    usecase "View Game Details" as UC3
+}
+
+User --> UC1: Navigates to browse section
+UC1 --> UC2: Searches or filters games
+UC2 --> UC1: Returns filtered games
+User --> UC3: Clicks on a game to view details
+UC3 --> User: Displays game details (price, description, screenshots, etc.)
+@enduml
