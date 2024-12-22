@@ -1,0 +1,16 @@
+@startuml
+
+' Interaction Diagram for User Login (Sequence Diagram)
+actor User
+boundary LoginPage
+control AuthController
+entity UserDatabase
+
+User -> LoginPage: Enter email and password
+LoginPage -> AuthController: Submit credentials
+AuthController -> UserDatabase: Validate credentials
+UserDatabase --> AuthController: Validation result
+AuthController -> LoginPage: Success or failure message
+LoginPage --> User: Display login result
+
+@enduml

@@ -1,0 +1,80 @@
+@startuml
+
+class User {
+  - userID: int
+  - username: String
+  - email: String
+  - password: String
+  - library: Library
+  - friendsList: List<Friend>
+  - achievements: List<Achievement>
+  + register(username: String, email: String, password: String): boolean
+  + login(email: String, password: String): boolean
+  + browseGames(): List<Game>
+  + purchaseGame(game: Game): boolean
+  + manageFriends(): void
+  + trackAchievements(): List<Achievement>
+}
+
+class Game {
+  - gameID: int
+  - name: String
+  - description: String
+  - price: double
+  - genre: String
+  + viewDetails(): String
+  + addAchievement(achievement: Achievement): void
+}
+
+class Library {
+  - userID: int
+  - games: List<Game>
+  + addGame(game: Game): void
+  + removeGame(game: Game): void
+  + viewLibrary(): List<Game>
+}
+
+class Achievement {
+  - achievementID: int
+  - name: String
+  - description: String
+  - gameID: int
+  - progress: double
+  + trackProgress(): double
+}
+
+class Friend {
+  - friendID: int
+  - friendUsername: String
+  + sendRequest(user: User): boolean
+  + acceptRequest(user: User): boolean
+  + removeFriend(user: User): boolean
+}
+
+class Payment {
+  - paymentID: int
+  - amount: double
+  - paymentMethod: String
+  - status: String
+  + processPayment(): boolean
+  + verifyPayment(): boolean
+}
+
+class Email {
+  - emailID: int
+  - recipient: String
+  - subject: String
+  - body: String
+  + sendEmail(): boolean
+}
+
+User "1" -- "1" Library : owns >
+User "1" -- "*" Friend : manages >
+User "1" -- "*" Achievement : earns >
+User "1" -- "*" Payment : makes >
+User "*" -- "*" Game : owns >
+Library "1" -- "*" Game : contains >
+Achievement "*" -- "1" Game : linked_to >
+Payment "1" -- "1" Email : triggers >
+
+@enduml
