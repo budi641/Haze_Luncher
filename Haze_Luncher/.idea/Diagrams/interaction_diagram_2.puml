@@ -1,0 +1,20 @@
+@startuml
+
+' Interaction Diagram for Game Purchase (Sequence Diagram)
+actor User
+boundary StorePage
+control PaymentController
+entity PaymentDatabase
+entity EmailService
+
+User -> StorePage: Select game and initiate purchase
+StorePage -> PaymentController: Process payment details
+PaymentController -> PaymentDatabase: Record transaction
+PaymentDatabase --> PaymentController: Confirmation
+PaymentController -> EmailService: Send purchase confirmation
+EmailService --> User: Email confirmation
+PaymentController --> StorePage: Payment success
+StorePage --> User: Display success message
+
+@enduml
+
