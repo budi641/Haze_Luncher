@@ -1,0 +1,16 @@
+@startuml
+
+' Interaction Diagram for Adding a Friend (Sequence Diagram)
+actor User
+boundary FriendsPage
+control FriendsController
+entity UserDatabase
+
+User -> FriendsPage: Search for friend
+FriendsPage -> FriendsController: Send friend request
+FriendsController -> UserDatabase: Update friend list
+UserDatabase --> FriendsController: Confirmation
+FriendsController -> FriendsPage: Request status
+FriendsPage --> User: Display result
+
+@enduml
