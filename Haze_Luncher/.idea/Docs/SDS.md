@@ -277,13 +277,13 @@ ORM (Object-Relational Mapping) is achieved using **Spring Data JPA** to map the
 
 ### **5.1 User Login Flow**
 
-**[Insert Interaction Diagram for User Login here]**
+![interaction_diagram_1.png](assets/interaction_diagram_1.png)
 
 This interaction diagram shows the process of a user logging in to the system, including the interactions between the **UI**, **Backend**, and **Database**.
 
 ### **5.2 Game Purchase Flow**
 
-**[Insert Interaction Diagram for Game Purchase here]**
+![interaction_diagram_2.png](assets/interaction_diagram_2.png)
 
 This interaction diagram illustrates how a user purchases a game, with the **UI** requesting data from the **Game Service** and updating the **Database**.
 
@@ -291,7 +291,7 @@ This interaction diagram illustrates how a user purchases a game, with the **UI*
 
 ## **6. Improvement Summary (Iteration 2)**
 
-This section will outline the improvements made during the second iteration of the design process.
+We enhanced the SRS and SDS by adding interaction diagrams and specifying pre- and post-conditions to the sequence diagrams, ensuring a clearer understanding of system behavior during different use cases. Additionally, we refined the domain model by removing the entities, focusing solely on the core business logic and their relationships, which simplified the overall design and made it more aligned with the system's functional requirements. These changes improve the clarity and precision of the design while ensuring better traceability of system interactions.
 
 ---
 
@@ -308,10 +308,23 @@ In this section, the user interface design for **Haze Launcher** is presented, s
 **Wireframes/Mockups:**
 
 - **Home Page:**
+
+  ![image.png](assets/HOmepng)
+
+  ![image.png](assets/image.png)
 - **Login Page:**
+
+
 - **Library Page:**
+
+  ![image.png](assets/ibrary.png)
 - **Game Page:**
+
+![image.png](assets/game.png)
+
 - **News Page:**
+
+  ![image.png](assets/news.png)
 
 ---
 
