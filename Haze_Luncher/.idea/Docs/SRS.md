@@ -210,59 +210,19 @@ Use Cases:
 
 ## **3. Domain Model**
 
-### *3.1 Key Entities and Relationships*:
-
-1. **User**: Represents a registered user of the system.
-    - Attributes: `userID`, `username`, `email`, `password`, `library`, `friendsList`, `achievements`
-    - Relationships:
-        - A user has a **Library** (1-to-1 relationship).
-        - A user has many **Friends** (1-to-many relationship).
-        - A user has many **Achievements** (1-to-many relationship).
-
-2. **Game**: Represents a game in the store or the user’s library.
-    - Attributes: `gameID`, `name`, `description`, `price`, `genre`
-    - Relationships:
-        - A game can belong to many **Users** (many-to-many relationship) through the **Library**.
-
-3. **Library**: Represents the collection of games a user has purchased or owns.
-    - Attributes: `userID`, `games[]` (a collection of Game objects)
-    - Relationships:
-        - A user has a **Library** (1-to-1 relationship).
-
-4. **Achievement**: Represents an achievement in a game.
-    - Attributes: `achievementID`, `name`, `description`, `gameID`
-    - Relationships:
-        - An achievement is associated with a **Game** (1-to-many relationship).
-
-5. **Friend**: Represents a user’s friend in the system.
-    - Attributes: `friendID`, `friendUsername`
-    - Relationships:
-        - A user has many **Friends** (many-to-many relationship).
-
-6. **Payment**: Represents the payment information for a game purchase.
-    - Attributes: `paymentID`, `amount`, `paymentMethod`, `status`
-    - Relationships:
-        - A user makes many **Payments** (1-to-many relationship).
-
-7. **Email**: Represents the email service used for sending notifications.
-    - Attributes: `emailID`, `recipient`, `subject`, `body`
-    - Relationships:
-        - A **Payment** triggers an **Email** for confirmation (1-to-1 relationship).
-
-
-
-### **3.2 Domain Model Diagram**
+### **3.1 Domain Model Diagram**
 
 ![Domain Model.png](../Diagrams/Domain%20Model/PNG/Domain%20Model.png)
 
-### **3.3 Explanation of the Diagram:**
+### **3.2 Explanation of the Diagram:**
 
-- **User**: The user is at the center of the system and has attributes like `userID`, `username`, `email`, and more. They have many relationships, such as owning a **Library**, having **Friends**, and earning **Achievements**.
+- **User**: The user is at the center of the system and has many relationships, such as owning a **Library**, having **Friends**, and earning **Achievements**.
 - **Game**: Games are associated with users via the **Library** and have attributes like `gameID`, `name`, and `price`. A game contains many **Achievements**.
 - **Library**: A **Library** is owned by the user and contains a list of **Games**.
 - **Achievement**: Achievements are linked to specific **Games** and are earned by users.
 - **Friend**: Users can have many **Friends**, and the relationship is many-to-many.
 - **Payment**: A user makes payments for games, and each payment triggers an **Email** notification.
+- **Email**: The **Payment** entity triggers an **Email** for confirmation.
 
 ---
 ### **4. System Sequence Diagrams (SSDs)**
