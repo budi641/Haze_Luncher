@@ -1,0 +1,11 @@
+@startuml
+[*] --> LoggedOut
+
+LoggedOut --> Login : User enters credentials
+Login --> LoggedIn : Credentials valid
+Login --> Error : Invalid credentials
+
+LoggedIn --> [*] : User logs out
+Error --> [*] : Error displayed
+
+@enduml
