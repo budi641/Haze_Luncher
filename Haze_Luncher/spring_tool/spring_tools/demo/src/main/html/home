@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Haze Launcher Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #1e3c72, #2a5298);
+            font-family: 'Poppins', sans-serif;
+            color: rgb(125, 125, 125);
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background: #1e3c72;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #5098df;
+            border-radius: 5px;
+        }
+
+        .card {
+            margin: 15px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .card img {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .btn-primary {
+            background: #1e3c72;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .btn-primary:hover {
+            background: #152a53;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Haze Launcher</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="#browse-games">Browse Games</a></li>
+                <li class="nav-item"><a class="nav-link" href="#friends">Friends</a></li>
+                <li class="nav-item"><a class="nav-link" href="#library">Library</a></li>
+                <li class="nav-item"><a class="nav-link" href="#achievements">Achievements</a></li>
+                <li class="nav-item"><a class="nav-link" href="#logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" id="browse-games">
+        <h2 class="text-center text-white">Browse Games</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="C:\Users\LEGION\Desktop\gta5.jpeg" class="card-img-top" alt="Game 1">
+                    <div class="card-body">
+                        <h5 class="card-title">GTA%</h5>
+                        <button class="btn btn-primary w-100">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="C:\Users\LEGION\Desktop\gun.jpeg" class="card-img-top" alt="Game 2">
+                    <div class="card-body">
+                        <h5 class="card-title">GUN GAME</h5>
+                        <button class="btn btn-primary w-100">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="C:\Users\LEGION\Desktop\download.jpeg" class="card-img-top" alt="Game 3">
+                    <div class="card-body">
+                        <h5 class="card-title">CARS</h5>
+                        <button class="btn btn-primary w-100">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="friends">
+        <h2 class="text-center text-white">Friends</h2>
+        <ul class="list-group">
+            <li class="list-group-item">Hana <button class="btn btn-danger btn-sm float-right">Remove</button></li>
+            <li class="list-group-item">mohamed <button class="btn btn-danger btn-sm float-right">Remove</button></li>
+            <li class="list-group-item">nada <button class="btn btn-danger btn-sm float-right">Remove</button></li>
+            <li class="list-group-item">menna <button class="btn btn-danger btn-sm float-right">Remove</button></li>
+            <li class="list-group-item">ahmed <button class="btn btn-danger btn-sm float-right">Remove</button></li>
+            <li class="list-group-item">youssef <button class="btn btn-danger btn-sm float-right">Remove</button></li>
+            <li class="list-group-item">bode <button class="btn btn-danger btn-sm float-right">Remove</button></li>
+            <li class="list-group-item">nasr <button class="btn btn-danger btn-sm float-right">Remove</button></li>
+            <li class="list-group-item">noha <button class="btn btn-danger btn-sm float-right">Remove</button></li>
+            <li class="list-group-item">m19 <button class="btn btn-danger btn-sm float-right">Remove</button></li>
+        </ul>
+        <button class="btn btn-primary mt-3">Add Friend</button>
+    </div>
+</body>
+
+    <div class="container" id="library">
+        <h2 class="text-center text-white">Library</h2>
+        <ul class="list-group">
+            <li class="list-group-item">The wolf</li>
+            <li class="list-group-item">Cybertruck</li>
+            <li class="list-group-item">racing</li>
+            <li class="list-group-item">Red Dead</li>
+            <li class="list-group-item">War</li>
+            <li class="list-group-item">rally</li>
+            <li class="list-group-item">gta5</li>
+            <li class="list-group-item">Minecraft</li>
+            <li class="list-group-item">pupg</li>
+            <li class="list-group-item">Call of Duty</li>
+        </ul>
+    </div>
+
+    <div class="container" id="achievements">
+        <h2 class="text-center text-white">Achievements</h2>
+        <p class="text-center">Track your accomplishments here.</p>
+    </div>
+
+    <div class="container" id="logout">
+        <h2 class="text-center text-white">Logout</h2>
+        <button class="btn btn-primary w-100">Logout</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
