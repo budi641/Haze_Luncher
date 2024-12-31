@@ -66,6 +66,15 @@ Use Cases:
 6. The system sends a confirmation message to the user's email.
 7. The user verifies their account and is redirected to the login page.
 
+**Pre-conditions:**
+- The user must not be registered already.
+- The user must have valid email format and password that meets security requirements.
+
+**Post-conditions:**
+- A new user account is created.
+- User details are stored in the database.
+- A confirmation email is sent to the user.
+- 
 **Alternative Flow:**
 - **A1:** If the email is already in use, the system displays an error message and prompts the user to choose a different one.
 - **A2:** If the password does not meet security requirements, the system displays an error message.
@@ -85,6 +94,14 @@ Use Cases:
 3. If correct, the system logs the user in and displays their library.
 4. If incorrect, the system displays an error message.
 
+**Pre-conditions:**
+- The user must have a registered account.
+- The user must provide valid credentials.
+
+**Post-conditions:**
+- The user is logged in and has access to their library.
+- Session information is created and stored.
+
 **Alternative Flow:**
 - **A1:** If the credentials are incorrect, the system displays an error message.
 - **A2:** If the user forgets their password, they can reset it via email.
@@ -102,6 +119,13 @@ Use Cases:
 2. The system displays available games.
 3. The user can filter and search for games.
 4. The user clicks on a game to view more details.
+
+**Pre-conditions:**
+- The user must be logged in.
+
+**Post-conditions:**
+- The user is shown the available games list.
+- The user can view details of selected games.
 
 **Alternative Flow:**
 - **A1:** If no games are available, the system displays a message saying "No games available."
@@ -121,6 +145,15 @@ Use Cases:
 4. The system processes the payment and adds the game to the library.
 5. The user receives a confirmation email.
 
+**Pre-conditions:**
+- The user must have sufficient balance or payment method available.
+- The game must be available for purchase.
+
+**Post-conditions:**
+- The user’s library is updated with the newly purchased game.
+- The payment is processed successfully.
+- A confirmation email is sent to the user.
+
 **Alternative Flow:**
 - **A1:** If the payment fails, the system displays an error message and prompts for re-entry.
 
@@ -138,6 +171,14 @@ Use Cases:
 3. The recipient accepts or rejects the request.
 4. If accepted, both users are added to each other's friends list.
 
+**Pre-conditions:**
+- The user must be logged in.
+- The recipient must have an active account.
+
+**Post-conditions:**
+- The user’s friends list is updated with the new friend.
+- The recipient’s friends list is updated if the request is accepted.
+
 **Alternative Flow:**
 - **A1:** If the user is already friends with the recipient, the system notifies them.
 
@@ -154,6 +195,14 @@ Use Cases:
 2. The user selects a game to view its achievements.
 3. The system shows the achievements, tracking progress.
 4. The user can view unlocked achievements.
+
+**Pre-conditions:**
+- The user must be logged in.
+- The game must have achievements to track.
+
+**Post-conditions:**
+- The system displays the achievements related to the game.
+- The user can view unlocked achievements.
 
 **Alternative Flow:**
 - **A1:** If no achievements are unlocked, the system displays a message saying "No achievements unlocked."
