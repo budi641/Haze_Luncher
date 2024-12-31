@@ -1,0 +1,48 @@
+@startuml
+!define RECTANGLE class
+
+package "Presentation Layer (UI)" as UI {
+    RECTANGLE LoginPage
+    RECTANGLE LibraryPage
+    RECTANGLE GameCatalogPage
+    LoginPage -down-> ApplicationLayer: HTTP Requests
+    LibraryPage -down-> ApplicationLayer: HTTP Requests
+    GameCatalogPage -down-> ApplicationLayer: HTTP Requests
+}
+
+package "Application Layer" as App {
+    RECTANGLE UserController
+    RECTANGLE GameController
+    RECTANGLE PaymentController
+    RECTANGLE LibraryController
+    RECTANGLE AchievementController
+    RECTANGLE FriendController
+    UserController -down-> DomainLayer: Calls Business Logic
+    GameController -down-> DomainLayer: Calls Business Logic
+    PaymentController -down-> DomainLayer: Calls Business Logic
+    LibraryController -down-> DomainLayer: Calls Business Logic
+    AchievementController -down-> DomainLayer: Calls Business Logic
+    FriendController -down-> DomainLayer: Calls Business Logic
+}
+
+package "Domain Layer" as Domain {
+    RECTANGLE User
+    RECTANGLE Game
+    RECTANGLE Payment
+    RECTANGLE Library
+    RECTANGLE Achievement
+    RECTANGLE Friendship
+    User -down-> PersistenceLayer: Saves/Retrieves Data
+    Game -down-> PersistenceLayer: Saves/Retrieves Data
+    Payment -down-> PersistenceLayer: Saves/Retrieves Data
+    Library -down-> PersistenceLayer: Saves/Retrieves Data
+    Achievement -down-> PersistenceLayer: Saves/Retrieves Data
+    Friendship -down-> PersistenceLayer: Saves/Retrieves Data
+}
+
+package "Persistence Layer" as Persist {
+    RECTANGLE Database
+    Database -down-> PersistenceLayer: Data Storage and Retrieval
+}
+
+@enduml
