@@ -1,213 +1,229 @@
+
 # **Software Design Specification (SDS) for Haze Launcher**
 
 ## **1. Introduction**
 
 ### **1.1 Purpose of the System**
 
-The purpose of the **Haze Launcher** is to provide an integrated platform for managing game libraries, purchasing games, tracking achievements, and managing social features. It consolidates multiple gaming functionalities into a single, user-friendly application, similar to Steam, allowing users to streamline their gaming experience.
+The purpose of the **Haze Launcher** is to create an all-in-one platform for game management, which integrates game purchasing, library management, achievement tracking, and social interaction into a single user-friendly application. It aims to replace fragmented gaming platforms by providing a seamless experience.
 
 ### **1.2 Design Goals**
 
-- **Modularity:** The system should be designed in a modular way to allow easy updates and maintenance. Different functionalities (e.g., game purchase, user management) should be encapsulated into independent components.
-- **Scalability:** The architecture should support scaling as the user base and feature set grow.
-- **Usability:** The system should provide a smooth and intuitive user experience, with simple navigation and a visually appealing design.
-- **Security:** User data should be stored securely, with encrypted passwords and payment methods.
-- **Performance:** The system should be optimized for fast load times and low latency, supporting up to 50 concurrent users.
+- **Efficiency**: Fast and responsive UI/UX for a seamless user experience.
+- **Scalability**: The system should be able to handle increasing users and features without degradation in performance.
+- **Security**: Data protection is a priority, ensuring user information (such as passwords, emails) is encrypted and secure.
+- **Maintainability**: The design should allow for easy updates and future feature integrations.
 
 ---
 
-## **2. High-Level Software Architecture**
+## **2. High-level Software Architecture**
 
 ### **2.1 Subsystem Decomposition**
 
-The system is broken down into the following subsystems:
-- **User Management:** Responsible for user authentication, registration, and profile management.
-- **Game Store and Library Management:** Handles browsing, purchasing, and managing the user’s game library.
-- **Achievements and Social Features:** Tracks game achievements, friends, and notifications.
-- **Payment System:** Processes transactions securely.
-- **Email Notification:** Sends confirmation emails and other user notifications.
-
-**Diagram:**
-**[Insert High-Level Architecture Diagram here]**
-
----
+The system is divided into the following primary subsystems:
+- **User Management**: Handles user registration, authentication, and profile management.
+- **Game Store**: Allows users to browse, search, and purchase games.
+- **Library Management**: Manages user libraries, tracking purchased games.
+- **Achievement Tracking**: Tracks and displays user achievements in games.
+- **Social Network**: Manages user friends, friend requests, and notifications.
 
 ### **2.2 Hardware/Software Mapping**
 
-The **Haze Launcher** application uses the following technologies:
-- **Frontend:** **Thymeleaf** is used for rendering dynamic HTML templates and integrating with backend logic.
-- **Backend:** **Spring Boot** is used to build the backend API, handling user authentication, game purchases, etc.
-- **Database:** **PostgreSQL** or **MySQL** stores user data, games, libraries, and achievements.
-- **IDE:** Development is done using **IntelliJ IDEA**, which supports Java, Spring Boot, and Thymeleaf.
-
-**Diagram:**
-**[Insert Hardware/Software Mapping Diagram here]**
-
----
+The **Haze Launcher** is developed using:
+- **Java** for backend development.
+- **Spring Boot** for application setup and API development.
+- **Thymeleaf** for rendering dynamic web pages.
+- **MySQL** as the relational database for persistent data storage.
 
 ### **2.3 Persistent Data Management**
 
-The data persistence layer uses a relational database (e.g., PostgreSQL) for storing user data, game libraries, achievements, and transactions. The ORM layer (via **Spring Data JPA**) maps entities like **User**, **Game**, **Library**, **Achievement**, etc., to corresponding tables.
+Data will be stored in a MySQL database. The following entities will be persisted:
+- **Users**
+- **Games**
+- **Libraries** (mapping users and their games)
+- **Achievements**
+- **Friends**
+- **Payments**
 
-**Diagram:**
-**[Insert ER Diagram here]**
-
----
+The relationships among these entities are managed using **Spring Data JPA**.
 
 ### **2.4 Access Control and Security**
 
-Security features include:
-- **Password Encryption:** User passwords are encrypted using **BCrypt** or a similar hashing algorithm.
-- **OAuth 2.0 Authentication:** Users can authenticate using OAuth 2.0 (e.g., through Google or Facebook login).
-- **Payment Security:** Payment information is processed via secure external gateways (e.g., Stripe or PayPal).
-- **Authorization:** Role-based access control for admins and regular users, with admin privileges for managing the game catalog.
-
----
+- **Authentication**: Managed via Spring Security using **JWT** (JSON Web Tokens) for secure user login and session management.
+- **Authorization**: Role-based access control (admin, user).
+- **Data Encryption**: Passwords will be encrypted using **BCrypt**.
 
 ### **2.5 Boundary Conditions**
 
-- **Error Handling:** The system will handle errors gracefully, with clear messages for the user in case of failures (e.g., invalid login, payment failure).
-- **Timeouts and Limits:** The system will handle timeouts gracefully and ensure that requests beyond a certain time limit (e.g., 30 seconds) return appropriate error messages.
-- **Session Management:** User sessions will expire after 30 minutes of inactivity and will require re-authentication.
+- **Load Balancing**: The system should handle at least 50 concurrent users with a response time of less than 3 seconds.
+- **Availability**: The system should ensure at least 99.9% uptime.
+- **Error Handling**: Proper logging and graceful error handling in case of system failures.
 
 ---
 
-## **3. Low-Level Design**
+## **3. Low-level Design**
 
 ### **3.1 Object Design Trade-offs**
 
-Trade-offs include:
-- **Memory vs. Performance:** Caching user data and game information can improve performance but increases memory usage. We’ll use an in-memory cache (e.g., **Redis**) for frequently accessed data.
-- **Complexity vs. Modularity:** A modular design is prioritized to support scalability, even if it introduces some initial complexity.
-
----
+- **Encapsulation**: Methods and attributes will be encapsulated within their respective classes to maintain data integrity.
+- **Inheritance**: Common user functionalities will be placed in a base class, while extended functionalities (like admin features) will inherit from this base class.
+- **Database Design**: We'll use a normalized relational database design to ensure data consistency and avoid data duplication.
 
 ### **3.2 Final Object Design**
 
-Key classes include:
-- **User:** Manages user information, including login, registration, and profile data.
-- **Game:** Represents a game in the catalog or user’s library.
-- **Library:** Manages the list of games a user owns.
-- **Achievement:** Tracks progress in individual games.
-- **Payment:** Handles transactions during game purchases.
-- **EmailService:** Manages email notifications.
+The core objects in the system include:
+- **User**
+- **Game**
+- **Library**
+- **Achievement**
+- **Payment**
+- **Friend**
 
-**Diagram:**
-**[Insert Refined Class Diagram here]**
-
----
+These objects have well-defined relationships, and the system is designed to handle these entities efficiently.
 
 ### **3.3 Packages**
 
-The system is organized into the following packages:
-- **com.hazelaucher.user**: Handles user-related functionality.
-- **com.hazelaucher.game**: Manages game catalog, purchases, and libraries.
-- **com.hazelaucher.social**: Handles friends and achievements.
-- **com.hazelaucher.payment**: Contains payment logic.
-- **com.hazelaucher.notification**: Manages email notifications.
-- **com.hazelaucher.web**: Contains Thymeleaf templates for frontend views.
-
-**Diagram:**
-**[Insert Package Diagram here]**
-
----
+The system’s packages are organized as follows:
+- `com.hazelaucher.model` – Domain models (User, Game, etc.)
+- `com.hazelaucher.service` – Service layer handling business logic
+- `com.hazelaucher.controller` – Controller layer for handling HTTP requests
+- `com.hazelaucher.repository` – Data access layer (repositories for each entity)
+- `com.hazelaucher.security` – Security and authentication
 
 ### **3.4 Class Interfaces**
 
-Key interfaces include:
-- **IUserService**: Manages user operations like registration and login.
-- **IGameService**: Manages game-related operations like browsing and purchasing.
-- **IPaymentService**: Handles payment transactions.
-- **IEmailService**: Manages email notifications.
+Each class provides interfaces for its methods, including CRUD operations for managing users, games, and purchases.
 
----
+Example for `UserService` interface:
+```java
+public interface UserService {
+    User registerUser(User user);
+    User authenticateUser(String email, String password);
+    List<Game> getLibrary(Long userId);
+}
+```
 
 ### **3.5 Design Patterns**
 
-The following design patterns are used:
-1. **Singleton Pattern** for services like **EmailService** and **PaymentService** to ensure one instance is shared.
-2. **Observer Pattern** for notifying users when achievements are unlocked.
-3. **Factory Method Pattern** to handle different payment methods (e.g., credit card, PayPal).
+The following design patterns are applied:
+1. **Singleton Pattern**: Used for managing the configuration settings across the system.
+2. **Factory Pattern**: Used to create different types of **Payment** objects based on the user's choice.
+3. **Observer Pattern**: Used to notify users of new game releases or updates in their library.
 
 ---
 
-## **4. Improvement Summary (Iteration 2)**
+## **4. Persistence Layer Design**
 
-In the second iteration, we plan to improve:
-- **Performance Optimization:** Caching frequently used data to reduce database load.
-- **UI Enhancements:** Refining the UI based on user feedback.
-- **Additional Features:** Adding support for more payment methods and social features like chat.
+### **4.1 ER Diagram**
+
+The **Entity Relationship (ER) Diagram** shows the entities in the system and their relationships, including **Users**, **Games**, **Achievements**, and **Payments**.
+
+**[Insert ER Diagram here]**
+
+### **4.2 ORM Details**
+
+ORM (Object-Relational Mapping) is achieved using **Spring Data JPA** to map the Java classes to database tables.
+
+#### **Entities**
+
+- **User**:
+  - `userId`, `email`, `password`, etc.
+  - Primary Key: `userId`
+  - Relationships: A **User** can have multiple **Games** and **Achievements**.
+
+  ```java
+  @Entity
+  @Table(name = "users")
+  public class User {
+      @Id
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+      private Long userId;
+
+      private String email;
+      private String password;
+      private String firstName;
+      private String lastName;
+  }
+  ```
+
+- **Game**:
+  - `gameId`, `name`, `description`, `price`, etc.
+  - Primary Key: `gameId`
+  - Relationships: A **Game** can have multiple **Achievements** and belongs to many **Users**.
+
+  ```java
+  @Entity
+  @Table(name = "games")
+  public class Game {
+      @Id
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+      private Long gameId;
+
+      private String name;
+      private String description;
+      private Double price;
+  }
+  ```
+
+- **Library**:
+  - Represents the relationship between users and games.
+  
+  ```java
+  @Entity
+  @Table(name = "libraries")
+  public class Library {
+      @Id
+      private Long userId;
+      
+      @Id
+      private Long gameId;
+  }
+  ```
+
+- **Achievement**:
+  - Tracks in-game achievements for users.
+  
+  ```java
+  @Entity
+  @Table(name = "achievements")
+  public class Achievement {
+      @Id
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+      private Long achievementId;
+
+      private String name;
+      private String description;
+  }
+  ```
 
 ---
 
-## **5. Glossary & References**
+## **5. Interaction Diagrams**
 
-- **Game Library:** The collection of games that a user owns.
-- **Achievement:** A task or goal within a game that can be unlocked.
-- **OAuth 2.0:** An authorization framework used for third-party authentication.
-- **BCrypt:** A password hashing algorithm.
-- **ORM (Object-Relational Mapping):** A technique for converting between object-oriented models and relational databases.
+### **5.1 User Login Flow**
+
+**[Insert Interaction Diagram for User Login here]**
+
+This interaction diagram shows the process of a user logging in to the system, including the interactions between the **UI**, **Backend**, and **Database**.
+
+### **5.2 Game Purchase Flow**
+
+**[Insert Interaction Diagram for Game Purchase here]**
+
+This interaction diagram illustrates how a user purchases a game, with the **UI** requesting data from the **Game Service** and updating the **Database**.
 
 ---
 
-### **Appendices:**
+## **6. Improvement Summary (Iteration 2)**
 
-- **Refined Class Diagram:**  
-  **[Insert Refined Class Diagram here]**
+This section will outline the improvements made during the second iteration of the design process. 
 
-- **Interaction Diagrams:**  
-  **[Insert Interaction Diagrams here]**
+---
 
-- **Persistence Layer Design (ER Diagram, ORM details):**  
-  **[Insert ER Diagram here]**
+## **8. Glossary & References**
 
-- **UI Wireframes/Mockups:**  
-  **[Insert UI Wireframes here]**
+- **JPA**: Java Persistence API.
+- **BCrypt**: A hashing algorithm used for password encryption.
+- **Spring Boot**: A framework used for building the backend services of the system.
+- **Thymeleaf**: A Java template engine used for rendering dynamic web pages.
 
-- **Well-commented and Documented Code:**  
-  **[Code snippets and explanations will be provided in iteration 2]**
-
-- **Fully-Dressed Use Cases:**  
-  **[Insert Use Cases here]**
-
-- **Use Case Diagram:**  
-  **[Insert Use Case Diagram here]**
-
-- **Vision Document:**  
-  **[Insert Vision Document here]**
-
-- **Supplementary Specs Document:**  
-  **[Insert Supplementary Specs Document here]**
-
-- **Business/Domain Rules:**  
-  **[Insert Business/Domain Rules here]**
-
-- **Logical Architecture:**  
-  **[Insert Logical Architecture Diagram here]**
-
-- **Domain Model:**  
-  **[Insert Domain Model Diagram here]**
-
-- **Design Class Diagrams:**  
-  **[Insert Design Class Diagrams here]**
-
-- **Sequence Diagrams (or Comm Diagrams):**  
-  **[Insert Sequence Diagrams here]**
-
-- **Activity Diagrams (representing business flow):**  
-  **[Insert Activity Diagrams here]**
-
-- **State Machine Diagrams (especially for UI Navigation):**  
-  **[Insert State Machine Diagrams here]**
-
-- **GUI Snapshots:**  
-  **[Insert GUI Snapshots here]**
-
-- **Design Patterns (show explicitly how you use 3 of them):**  
-  **[Insert Design Patterns here]**
-
-- **Summary Sheet (1 page):**  
-  **[Insert Summary Sheet here]**
-
-- **Lessons Learnt (1 page):**  
-  **[Insert Lessons Learnt here]**
