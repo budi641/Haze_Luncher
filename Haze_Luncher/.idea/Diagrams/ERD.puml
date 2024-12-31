@@ -1,0 +1,49 @@
+@startuml
+
+entity "User" as User {
+    + userId : Long
+    + email : String
+    + password : String
+    + firstName : String
+    + lastName : String
+}
+
+entity "Game" as Game {
+    + gameId : Long
+    + name : String
+    + description : String
+    + price : Double
+}
+
+entity "Library" as Library {
+    + userId : Long
+    + gameId : Long
+}
+
+entity "Achievement" as Achievement {
+    + achievementId : Long
+    + name : String
+    + description : String
+}
+
+entity "Payment" as Payment {
+    + paymentId : Long
+    + amount : Double
+    + paymentMethod : String
+    + userId : Long
+}
+
+entity "Friend" as Friend {
+    + userId : Long
+    + friendId : Long
+}
+
+User ||--o| Library : "owns"
+Game ||--o| Library : "contains"
+User ||--o| Achievement : "unlocks"
+Game ||--o| Achievement : "has"
+User ||--o| Payment : "makes"
+User ||--o| Friend : "is_friend_with"
+Friend ||--o| User : "is_friend_with"
+
+@enduml

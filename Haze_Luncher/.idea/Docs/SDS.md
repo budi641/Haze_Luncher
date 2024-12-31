@@ -1,4 +1,3 @@
-
 # **Software Design Specification (SDS) for Haze Launcher**
 
 ## **1. Introduction**
@@ -21,6 +20,7 @@ The purpose of the **Haze Launcher** is to create an all-in-one platform for gam
 ### **2.1 Subsystem Decomposition**
 
 The system is divided into the following primary subsystems:
+
 - **User Management**: Handles user registration, authentication, and profile management.
 - **Game Store**: Allows users to browse, search, and purchase games.
 - **Library Management**: Manages user libraries, tracking purchased games.
@@ -30,6 +30,7 @@ The system is divided into the following primary subsystems:
 ### **2.2 Hardware/Software Mapping**
 
 The **Haze Launcher** is developed using:
+
 - **Java** for backend development.
 - **Spring Boot** for application setup and API development.
 - **Thymeleaf** for rendering dynamic web pages.
@@ -38,6 +39,7 @@ The **Haze Launcher** is developed using:
 ### **2.3 Persistent Data Management**
 
 Data will be stored in a MySQL database. The following entities will be persisted:
+
 - **Users**
 - **Games**
 - **Libraries** (mapping users and their games)
@@ -63,6 +65,10 @@ The relationships among these entities are managed using **Spring Data JPA**.
 
 ## **3. Low-level Design**
 
+### **Class Diagram:**
+
+![class_diagram.png](assets/class_diagram.png)
+
 ### **3.1 Object Design Trade-offs**
 
 - **Encapsulation**: Methods and attributes will be encapsulated within their respective classes to maintain data integrity.
@@ -72,6 +78,7 @@ The relationships among these entities are managed using **Spring Data JPA**.
 ### **3.2 Final Object Design**
 
 The core objects in the system include:
+
 - **User**
 - **Game**
 - **Library**
@@ -84,6 +91,7 @@ These objects have well-defined relationships, and the system is designed to han
 ### **3.3 Packages**
 
 The system’s packages are organized as follows:
+
 - `com.hazelaucher.model` – Domain models (User, Game, etc.)
 - `com.hazelaucher.service` – Service layer handling business logic
 - `com.hazelaucher.controller` – Controller layer for handling HTTP requests
@@ -95,6 +103,7 @@ The system’s packages are organized as follows:
 Each class provides interfaces for its methods, including CRUD operations for managing users, games, and purchases.
 
 Example for `UserService` interface:
+
 ```java
 public interface UserService {
     User registerUser(User user);
@@ -107,10 +116,12 @@ public interface UserService {
 
 The following design patterns are applied:
 
-1. **Singleton Pattern**: 
+1. **Singleton Pattern**:
+
    - Used for managing the configuration settings across the system. The `ConfigManager` class ensures that only one instance of configuration settings exists and is accessible throughout the application. This guarantees consistent configuration management across all components.
-   
-   **Example**: 
+
+   **Example**:
+
    ```java
    public class ConfigManager {
        private static ConfigManager instance;
@@ -127,11 +138,12 @@ The following design patterns are applied:
        }
    }
    ```
+2. **Factory Pattern**:
 
-2. **Factory Pattern**: 
    - Used to create different types of **Payment** objects based on the user's choice. The `PaymentFactory` class generates instances of payment methods such as `CreditCardPayment`, `PayPalPayment`, etc., depending on the selected payment method. This allows for easy extensibility when adding new payment options.
 
    **Example**:
+
    ```java
    public class PaymentFactory {
        public Payment createPayment(String paymentType) {
@@ -144,11 +156,12 @@ The following design patterns are applied:
        }
    }
    ```
+3. **Observer Pattern**:
 
-3. **Observer Pattern**: 
    - Used to notify users of new game releases or updates in their library. The `Library` class notifies all subscribed `User` objects when a new game is added to their library or when updates are available. This pattern allows for easy updating of users without tightly coupling the components.
 
    **Example**:
+
    ```java
    public class Library {
        private List<User> users = new ArrayList<>();
@@ -179,7 +192,7 @@ The following design patterns are applied:
 
 The **Entity Relationship (ER) Diagram** shows the entities in the system and their relationships, including **Users**, **Games**, **Achievements**, and **Payments**.
 
-**[Insert ER Diagram here]**
+![ERD.png](assets/ERD.png)
 
 ### **4.2 ORM Details**
 
@@ -188,6 +201,7 @@ ORM (Object-Relational Mapping) is achieved using **Spring Data JPA** to map the
 #### **Entities**
 
 - **User**:
+
   - `userId`, `email`, `password`, etc.
   - Primary Key: `userId`
   - Relationships: A **User** can have multiple **Games** and **Achievements**.
@@ -206,8 +220,8 @@ ORM (Object-Relational Mapping) is achieved using **Spring Data JPA** to map the
       private String lastName;
   }
   ```
-
 - **Game**:
+
   - `gameId`, `name`, `description`, `price`, etc.
   - Primary Key: `gameId`
   - Relationships: A **Game** can have multiple **Achievements** and belongs to many **Users**.
@@ -225,25 +239,25 @@ ORM (Object-Relational Mapping) is achieved using **Spring Data JPA** to map the
       private Double price;
   }
   ```
-
 - **Library**:
+
   - Represents the relationship between users and games.
-  
+
   ```java
   @Entity
   @Table(name = "libraries")
   public class Library {
       @Id
       private Long userId;
-      
+
       @Id
       private Long gameId;
   }
   ```
-
 - **Achievement**:
+
   - Tracks in-game achievements for users.
-  
+
   ```java
   @Entity
   @Table(name = "achievements")
@@ -277,9 +291,10 @@ This interaction diagram illustrates how a user purchases a game, with the **UI*
 
 ## **6. Improvement Summary (Iteration 2)**
 
-This section will outline the improvements made during the second iteration of the design process. 
+This section will outline the improvements made during the second iteration of the design process.
 
 ---
+
 ### **7. UI Wireframes/Mockups**
 
 In this section, the user interface design for **Haze Launcher** is presented, showcasing the various key pages designed in Figma. These include:
@@ -291,23 +306,28 @@ In this section, the user interface design for **Haze Launcher** is presented, s
 - **News Page:** A page that shows the latest updates, announcements, and news related to the games and the platform.
 
 **Wireframes/Mockups:**
-- **Home Page:** 
-- **Login Page:** 
-- **Library Page:** 
-- **Game Page:** 
-- **News Page:** 
+
+- **Home Page:**
+- **Login Page:**
+- **Library Page:**
+- **Game Page:**
+- **News Page:**
+
 ---
+
 ### **8. Vision**
 
 The vision of **Haze Launcher** is to provide a unified platform for gamers, combining game purchasing, library management, achievement tracking, and social interaction in one place. The goal is to offer a seamless, user-friendly experience for managing games, connecting with friends, and staying updated on the latest releases.
 
 Key goals:
+
 - **Convenience:** All gaming needs in one platform.
 - **Community:** Connect with friends and share achievements.
 - **Simplicity:** Easy-to-use interface for gamers of all levels.
 - **Cross-Platform Compatibility:** Accessible across different devices.
 
 ---
+
 ### **9. Supplementary Specs**
 
 The **Supplementary Specifications** define additional non-functional requirements and constraints for the **Haze Launcher** to ensure it operates effectively in various environments and meets user expectations.
@@ -321,62 +341,60 @@ The **Supplementary Specifications** define additional non-functional requiremen
 - **Cross-Platform Support:** The application should be accessible from both desktop and mobile devices with a responsive design.
 - **Accessibility:** The platform must comply with accessibility standards to ensure that all users, including those with disabilities, can use the platform effectively.
 
-___
+---
 
 ### **10. OCL Constraints**
 
 1. **User Registration Constraints:**
-   - **Unique Email:**  
-     `context User inv: User.allInstances()->forAll(u1, u2 | u1.email <> u2.email)`  
+
+   - **Unique Email:**
+     `context User inv: User.allInstances()->forAll(u1, u2 | u1.email <> u2.email)`
      Ensures that every user has a unique email address.
-
 2. **Password Security Constraints:**
-   - **Password Length:**  
-     `context User inv: self.password.size() >= 8`  
+
+   - **Password Length:**
+     `context User inv: self.password.size() >= 8`
      Ensures that passwords must be at least 8 characters long.
-
-   - **Password Complexity:**  
-     `context User inv: self.password.matches('[A-Za-z0-9]*')`  
+   - **Password Complexity:**
+     `context User inv: self.password.matches('[A-Za-z0-9]*')`
      Ensures that passwords must contain a mix of letters and numbers.
-
 3. **Game Purchase Constraints:**
-   - **Sufficient Funds:**  
-     `context User inv: self.balance >= Game.price`  
+
+   - **Sufficient Funds:**
+     `context User inv: self.balance >= Game.price`
      Ensures that a user must have enough funds to purchase a game.
-
-   - **Game Purchase Limit:**  
-     `context Library inv: self.games->size() <= 1000`  
+   - **Game Purchase Limit:**
+     `context Library inv: self.games->size() <= 1000`
      Ensures that a user can only add up to 1000 games to their library (modifiable as needed).
-
 4. **Achievement Tracking Constraints:**
-   - **Unlocked Achievement:**  
-     `context Achievement inv: self.isUnlocked = true implies self.game.players->includes(self.user)`  
+
+   - **Unlocked Achievement:**
+     `context Achievement inv: self.isUnlocked = true implies self.game.players->includes(self.user)`
      Ensures that an achievement can only be unlocked by a user who owns the associated game.
-
 5. **Friendship Constraints:**
-   - **Unique Friendship Relationship:**  
-     `context User inv: self.friends->forAll(friend | friend.friends->includes(self))`  
+
+   - **Unique Friendship Relationship:**
+     `context User inv: self.friends->forAll(friend | friend.friends->includes(self))`
      Ensures that friendship is bidirectional (i.e., if User A is friends with User B, User B must also be friends with User A).
-
-   - **Maximum Number of Friends:**  
-     `context User inv: self.friends->size() <= 500`  
+   - **Maximum Number of Friends:**
+     `context User inv: self.friends->size() <= 500`
      Ensures that a user cannot have more than 500 friends.
-
 6. **Library Constraints:**
-   - **Game Ownership:**  
-     `context Library inv: self.user.library->includes(self.game)`  
+
+   - **Game Ownership:**
+     `context Library inv: self.user.library->includes(self.game)`
      Ensures that a game can only be added to a user's library if the user has purchased it.
-
-   - **No Duplicate Games in Library:**  
-     `context Library inv: self.games->isUnique()`  
+   - **No Duplicate Games in Library:**
+     `context Library inv: self.games->isUnique()`
      Ensures that the same game cannot be added multiple times to the library.
-
 7. **Payment Constraints:**
-   - **Valid Payment Method:**  
-     `context Payment inv: self.paymentMethod.isValid()`  
+
+   - **Valid Payment Method:**
+     `context Payment inv: self.paymentMethod.isValid()`
      Ensures that the selected payment method is valid before processing a payment.
 
-___
+---
+
 ### **11. Logical Architecture**
 
 The **Logical Architecture** defines the structure and components of the **Haze Launcher** system, focusing on the interaction between the different modules.
@@ -402,9 +420,11 @@ The **Logical Architecture** defines the structure and components of the **Haze 
 - **Presentation Layer** interacts with the **Application Layer** through HTTP requests.
 - The **Application Layer** communicates with the **Domain Layer** to process data, which is then stored/retrieved via the **Persistence Layer**.
 
-**Diagram:**  
+**Diagram:**
 **[Place for Diagram]**
-___
+
+---
+
 ### **12. Activity Diagrams (Representing Business Flow)**
 
 #### **1. Game Purchase Flow**
@@ -420,7 +440,7 @@ ___
 - **Confirmation**: System sends a confirmation email.
 - **End**: The purchase process ends.
 
-**Diagram:**  
+**Diagram:**
 **[Place for Diagram]**
 
 #### **2. User Registration Flow**
@@ -435,7 +455,7 @@ ___
 - **Account Activation**: User activates the account via email link.
 - **End**: Registration is complete.
 
-**Diagram:**  
+**Diagram:**
 **[Place for Diagram]**
 
 #### **3. Achievement Tracking Flow**
@@ -448,10 +468,11 @@ ___
 - **Update Profile**: The achievement is added to the user’s profile.
 - **End**: Achievement tracking ends.
 
-**Diagram:**  
+**Diagram:**
 **[Place for Diagram]**
 
-___
+---
+
 ### **13. State Machine Diagrams (UI Navigation)**
 
 State machine diagrams show the states of key UI components and how they transition. Below are the state machine diagrams for **Haze Launcher**'s UI navigation.
@@ -463,7 +484,7 @@ State machine diagrams show the states of key UI components and how they transit
 - **Logged-in State**: User is logged in and can navigate to other sections. User can log out, returning to the **Initial State**.
 - **Error State**: If login fails, system shows an error.
 
-**Diagram:**  
+**Diagram:**
 **[Place for Diagram]**
 
 #### **2. Game Library Navigation**
@@ -473,7 +494,7 @@ State machine diagrams show the states of key UI components and how they transit
 - **Game Details State**: User selects a game to view details.
 - **Purchase State**: User buys a game, and it’s added to the library.
 
-**Diagram:**  
+**Diagram:**
 **[Place for Diagram]**
 
 #### **3. Achievement Tracking**
@@ -482,10 +503,11 @@ State machine diagrams show the states of key UI components and how they transit
 - **Game Progress State**: System tracks user progress.
 - **Achievement Unlocked State**: Milestone reached, achievement unlocked.
 
-**Diagram:**  
+**Diagram:**
 **[Place for Diagram]**
 
-___
+---
+
 ### **Glossary**
 
 - **Haze Launcher**: The platform for game management, including purchasing, library management, achievements, and social interactions.
