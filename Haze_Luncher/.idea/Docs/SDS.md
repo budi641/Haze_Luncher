@@ -219,7 +219,178 @@ This interaction diagram illustrates how a user purchases a game, with the **UI*
 This section will outline the improvements made during the second iteration of the design process. 
 
 ---
+### **7. UI Wireframes/Mockups**
 
+In this section, the user interface design for **Haze Launcher** is presented, showcasing the various key pages designed in Figma. These include:
+
+- **Home Page:** The landing page of the application where users can see featured games, news, and access other sections like the store and library.
+- **Login Page:** A page where users enter their credentials to log in to the system.
+- **Library Page:** A page where users can view the games they have purchased and manage their game library.
+- **Game Page:** A page that displays detailed information about a specific game, including its description, price, and purchase option.
+- **News Page:** A page that shows the latest updates, announcements, and news related to the games and the platform.
+
+**Wireframes/Mockups:**
+- **Home Page:** 
+- **Login Page:** 
+- **Library Page:** 
+- **Game Page:** 
+- **News Page:** 
+---
+### **8. Vision**
+
+The vision of **Haze Launcher** is to provide a unified platform for gamers, combining game purchasing, library management, achievement tracking, and social interaction in one place. The goal is to offer a seamless, user-friendly experience for managing games, connecting with friends, and staying updated on the latest releases.
+
+Key goals:
+- **Convenience:** All gaming needs in one platform.
+- **Community:** Connect with friends and share achievements.
+- **Simplicity:** Easy-to-use interface for gamers of all levels.
+- **Cross-Platform Compatibility:** Accessible across different devices.
+
+---
+### **9. Supplementary Specs**
+
+The **Supplementary Specifications** define additional non-functional requirements and constraints for the **Haze Launcher** to ensure it operates effectively in various environments and meets user expectations.
+
+- **Performance:** The platform should support at least 50 concurrent users with response times of ≤3 seconds for major interactions (e.g., browsing games, purchasing).
+- **Security:** All sensitive user data, such as passwords and payment details, must be encrypted and stored securely using industry-standard encryption methods.
+- **Data Integrity:** The system must ensure consistency and reliability of the user's game library and achievements, even in the event of failures or crashes.
+- **Scalability:** The platform should be able to scale easily to support future features, more users, and larger data volumes as the platform grows.
+- **Availability:** The platform must ensure 99.9% uptime, with proper failover mechanisms in place to handle outages.
+- **Localization:** The platform should support multiple languages and regions to cater to a global user base.
+- **Cross-Platform Support:** The application should be accessible from both desktop and mobile devices with a responsive design.
+- **Accessibility:** The platform must comply with accessibility standards to ensure that all users, including those with disabilities, can use the platform effectively.
+
+___
+
+### **10. OCL Constraints**
+
+1. **User Registration Constraints:**
+   - **Unique Email:**  
+     `context User inv: User.allInstances()->forAll(u1, u2 | u1.email <> u2.email)`  
+     Ensures that every user has a unique email address.
+
+2. **Password Security Constraints:**
+   - **Password Length:**  
+     `context User inv: self.password.size() >= 8`  
+     Ensures that passwords must be at least 8 characters long.
+
+   - **Password Complexity:**  
+     `context User inv: self.password.matches('[A-Za-z0-9]*')`  
+     Ensures that passwords must contain a mix of letters and numbers.
+
+3. **Game Purchase Constraints:**
+   - **Sufficient Funds:**  
+     `context User inv: self.balance >= Game.price`  
+     Ensures that a user must have enough funds to purchase a game.
+
+   - **Game Purchase Limit:**  
+     `context Library inv: self.games->size() <= 1000`  
+     Ensures that a user can only add up to 1000 games to their library (modifiable as needed).
+
+4. **Achievement Tracking Constraints:**
+   - **Unlocked Achievement:**  
+     `context Achievement inv: self.isUnlocked = true implies self.game.players->includes(self.user)`  
+     Ensures that an achievement can only be unlocked by a user who owns the associated game.
+
+5. **Friendship Constraints:**
+   - **Unique Friendship Relationship:**  
+     `context User inv: self.friends->forAll(friend | friend.friends->includes(self))`  
+     Ensures that friendship is bidirectional (i.e., if User A is friends with User B, User B must also be friends with User A).
+
+   - **Maximum Number of Friends:**  
+     `context User inv: self.friends->size() <= 500`  
+     Ensures that a user cannot have more than 500 friends.
+
+6. **Library Constraints:**
+   - **Game Ownership:**  
+     `context Library inv: self.user.library->includes(self.game)`  
+     Ensures that a game can only be added to a user's library if the user has purchased it.
+
+   - **No Duplicate Games in Library:**  
+     `context Library inv: self.games->isUnique()`  
+     Ensures that the same game cannot be added multiple times to the library.
+
+7. **Payment Constraints:**
+   - **Valid Payment Method:**  
+     `context Payment inv: self.paymentMethod.isValid()`  
+     Ensures that the selected payment method is valid before processing a payment.
+
+___
+### **11. Logical Architecture**
+
+The **Logical Architecture** defines the structure and components of the **Haze Launcher** system, focusing on the interaction between the different modules.
+
+#### **1. System Layers**
+
+- **Presentation Layer (UI)**: User interfaces, built with **Thymeleaf**, providing views like login, library, and game catalog. Communicates with the backend via REST APIs.
+- **Application Layer**: Manages user requests and business logic. It includes controllers and services for user, game, payment, and library management.
+- **Domain Layer**: Contains the core business logic, with entities like `User`, `Game`, and `Payment`, and manages the persistence of data.
+- **Persistence Layer**: Responsible for data storage and retrieval using a relational database (e.g., MySQL), with **Spring Data JPA** handling ORM.
+
+#### **2. Modules and Interactions**
+
+- **User Management**: Handles registration, login, and profile management.
+- **Game Catalog**: Manages game browsing, searching, and details.
+- **Purchase & Payment**: Handles game purchases and payment processing.
+- **Library Management**: Manages the user's owned games and achievements.
+- **Achievement Tracking**: Tracks and displays game achievements.
+- **Friendship Management**: Manages friend requests and interactions.
+
+#### **3. Component Interaction**
+
+- **Presentation Layer** interacts with the **Application Layer** through HTTP requests.
+- The **Application Layer** communicates with the **Domain Layer** to process data, which is then stored/retrieved via the **Persistence Layer**.
+
+**Diagram:**  
+**[Place for Diagram]**
+___
+### **12. Activity Diagrams (Representing Business Flow)**
+
+#### **1. Game Purchase Flow**
+
+**Description**: This diagram represents the sequence of activities involved when a user purchases a game.
+
+- **Start**: The user navigates to the game catalog.
+- **Select Game**: User selects a game to purchase.
+- **Check Availability**: System checks the game’s availability.
+- **Proceed to Payment**: If the game is available, the user proceeds to the payment gateway.
+- **Payment Processing**: System processes payment and confirms the transaction.
+- **Add to Library**: Upon successful payment, the game is added to the user’s library.
+- **Confirmation**: System sends a confirmation email.
+- **End**: The purchase process ends.
+
+**Diagram:**  
+**[Place for Diagram]**
+
+#### **2. User Registration Flow**
+
+**Description**: This diagram represents the user registration process.
+
+- **Start**: User visits the registration page.
+- **Enter Information**: User enters required information (e.g., username, email, password).
+- **Validate Input**: System validates the data.
+- **Create Account**: If validation is successful, system creates a new user.
+- **Send Confirmation**: System sends a confirmation email to the user.
+- **Account Activation**: User activates the account via email link.
+- **End**: Registration is complete.
+
+**Diagram:**  
+**[Place for Diagram]**
+
+#### **3. Achievement Tracking Flow**
+
+**Description**: This diagram shows how the system tracks and updates achievements.
+
+- **Start**: User plays a game and achieves a milestone.
+- **Track Progress**: System monitors the user’s progress in the game.
+- **Achievement Unlocked**: If progress matches an achievement condition, the system updates the achievement status.
+- **Update Profile**: The achievement is added to the user’s profile.
+- **End**: Achievement tracking ends.
+
+**Diagram:**  
+**[Place for Diagram]**
+
+___
 ## **8. Glossary & References**
 
 - **JPA**: Java Persistence API.
