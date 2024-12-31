@@ -106,9 +106,70 @@ public interface UserService {
 ### **3.5 Design Patterns**
 
 The following design patterns are applied:
-1. **Singleton Pattern**: Used for managing the configuration settings across the system.
-2. **Factory Pattern**: Used to create different types of **Payment** objects based on the user's choice.
-3. **Observer Pattern**: Used to notify users of new game releases or updates in their library.
+
+1. **Singleton Pattern**: 
+   - Used for managing the configuration settings across the system. The `ConfigManager` class ensures that only one instance of configuration settings exists and is accessible throughout the application. This guarantees consistent configuration management across all components.
+   
+   **Example**: 
+   ```java
+   public class ConfigManager {
+       private static ConfigManager instance;
+
+       private ConfigManager() {
+           // Private constructor to prevent instantiation
+       }
+
+       public static ConfigManager getInstance() {
+           if (instance == null) {
+               instance = new ConfigManager();
+           }
+           return instance;
+       }
+   }
+   ```
+
+2. **Factory Pattern**: 
+   - Used to create different types of **Payment** objects based on the user's choice. The `PaymentFactory` class generates instances of payment methods such as `CreditCardPayment`, `PayPalPayment`, etc., depending on the selected payment method. This allows for easy extensibility when adding new payment options.
+
+   **Example**:
+   ```java
+   public class PaymentFactory {
+       public Payment createPayment(String paymentType) {
+           if (paymentType.equalsIgnoreCase("creditcard")) {
+               return new CreditCardPayment();
+           } else if (paymentType.equalsIgnoreCase("paypal")) {
+               return new PayPalPayment();
+           }
+           return null;
+       }
+   }
+   ```
+
+3. **Observer Pattern**: 
+   - Used to notify users of new game releases or updates in their library. The `Library` class notifies all subscribed `User` objects when a new game is added to their library or when updates are available. This pattern allows for easy updating of users without tightly coupling the components.
+
+   **Example**:
+   ```java
+   public class Library {
+       private List<User> users = new ArrayList<>();
+
+       public void addUser(User user) {
+           users.add(user);
+       }
+
+       public void notifyUsers(String gameUpdate) {
+           for (User user : users) {
+               user.update(gameUpdate);
+           }
+       }
+   }
+
+   public class User {
+       public void update(String gameUpdate) {
+           System.out.println("New update: " + gameUpdate);
+       }
+   }
+   ```
 
 ---
 
@@ -391,10 +452,60 @@ ___
 **[Place for Diagram]**
 
 ___
-## **8. Glossary & References**
+### **13. State Machine Diagrams (UI Navigation)**
 
-- **JPA**: Java Persistence API.
-- **BCrypt**: A hashing algorithm used for password encryption.
-- **Spring Boot**: A framework used for building the backend services of the system.
-- **Thymeleaf**: A Java template engine used for rendering dynamic web pages.
+State machine diagrams show the states of key UI components and how they transition. Below are the state machine diagrams for **Haze Launcher**'s UI navigation.
 
+#### **1. User Authentication (Login/Logout)**
+
+- **Initial State**: User is logged out.
+- **Login State**: User enters credentials. If valid, transitions to **Logged-in State**; otherwise, stays in the **Initial State**.
+- **Logged-in State**: User is logged in and can navigate to other sections. User can log out, returning to the **Initial State**.
+- **Error State**: If login fails, system shows an error.
+
+**Diagram:**  
+**[Place for Diagram]**
+
+#### **2. Game Library Navigation**
+
+- **Initial State**: User is on the homepage.
+- **Library State**: User navigates to the game library.
+- **Game Details State**: User selects a game to view details.
+- **Purchase State**: User buys a game, and it’s added to the library.
+
+**Diagram:**  
+**[Place for Diagram]**
+
+#### **3. Achievement Tracking**
+
+- **Initial State**: No achievements unlocked.
+- **Game Progress State**: System tracks user progress.
+- **Achievement Unlocked State**: Milestone reached, achievement unlocked.
+
+**Diagram:**  
+**[Place for Diagram]**
+
+___
+### **Glossary**
+
+- **Haze Launcher**: The platform for game management, including purchasing, library management, achievements, and social interactions.
+- **User Management**: Handles user registration, authentication, and profile management.
+- **Game Store**: Section for browsing, searching, and purchasing games.
+- **Library Management**: Manages a user’s game library.
+- **Achievement Tracking**: Tracks in-game achievements for users.
+- **Social Network**: Manages user friends, friend requests, and notifications.
+- **Spring Boot**: Framework used for backend development and API creation.
+- **Thymeleaf**: Template engine for rendering dynamic web pages.
+- **MySQL**: Relational database for storing persistent data.
+- **Spring Data JPA**: Used for ORM to map Java objects to database tables.
+- **JWT (JSON Web Tokens)**: Used for secure user authentication and session management.
+- **BCrypt**: Algorithm for securely hashing user passwords.
+- **Singleton Pattern**: Ensures only one instance of configuration settings across the system.
+- **Factory Pattern**: Creates different types of payment objects based on user choice.
+- **Observer Pattern**: Notifies users of updates in their library.
+- **Entity**: A Java class representing a table in the database (e.g., User, Game, Achievement).
+- **CRUD Operations**: Create, Read, Update, Delete operations for managing entities in the system.
+- **ER Diagram**: Visual representation of entities and their relationships in the system.
+- **ORM (Object-Relational Mapping)**: Technique for converting data between object-oriented programming and relational databases.
+- **OCL (Object Constraint Language)**: Formal language used to define constraints on models in UML.
+- **UI**: User interface that allows interaction with the system.
