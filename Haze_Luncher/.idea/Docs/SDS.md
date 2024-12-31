@@ -313,8 +313,6 @@ In this section, the user interface design for **Haze Launcher** is presented, s
 
   ![image.png](assets/image.png)
 - **Login Page:**
-
-
 - **Library Page:**
 
   ![image.png](assets/ibrary.png)
@@ -434,7 +432,7 @@ The **Logical Architecture** defines the structure and components of the **Haze 
 - The **Application Layer** communicates with the **Domain Layer** to process data, which is then stored/retrieved via the **Persistence Layer**.
 
 **Diagram:**
-**[Place for Diagram]**
+![Logicalarchticture.png](assets/Logical archticture.png)
 
 ---
 
@@ -454,7 +452,8 @@ The **Logical Architecture** defines the structure and components of the **Haze 
 - **End**: The purchase process ends.
 
 **Diagram:**
-**[Place for Diagram]**
+
+![Gamepurchase.png](assets/Game purchase.png?t=1735668613342)
 
 #### **2. User Registration Flow**
 
@@ -469,7 +468,8 @@ The **Logical Architecture** defines the structure and components of the **Haze 
 - **End**: Registration is complete.
 
 **Diagram:**
-**[Place for Diagram]**
+
+![UserRegistration.png](assets/User Registration.png)
 
 #### **3. Achievement Tracking Flow**
 
@@ -482,13 +482,12 @@ The **Logical Architecture** defines the structure and components of the **Haze 
 - **End**: Achievement tracking ends.
 
 **Diagram:**
-**[Place for Diagram]**
+
+![AchievementTracking.png](assets/Achievement Tracking.png)
 
 ---
 
 ### **13. State Machine Diagrams (UI Navigation)**
-
-State machine diagrams show the states of key UI components and how they transition. Below are the state machine diagrams for **Haze Launcher**'s UI navigation.
 
 #### **1. User Authentication (Login/Logout)**
 
@@ -498,7 +497,8 @@ State machine diagrams show the states of key UI components and how they transit
 - **Error State**: If login fails, system shows an error.
 
 **Diagram:**
-**[Place for Diagram]**
+
+![UserAuthentication.png](assets/User Authentication.png)
 
 #### **2. Game Library Navigation**
 
@@ -508,7 +508,8 @@ State machine diagrams show the states of key UI components and how they transit
 - **Purchase State**: User buys a game, and it’s added to the library.
 
 **Diagram:**
-**[Place for Diagram]**
+
+![cgamelibrary.png](assets/cgame library.png?t=1735669200839)
 
 #### **3. Achievement Tracking**
 
@@ -517,7 +518,8 @@ State machine diagrams show the states of key UI components and how they transit
 - **Achievement Unlocked State**: Milestone reached, achievement unlocked.
 
 **Diagram:**
-**[Place for Diagram]**
+
+![Achievement.png](assets/Achievement.png)
 
 ---
 
