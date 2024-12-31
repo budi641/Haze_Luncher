@@ -66,6 +66,15 @@ Use Cases:
 6. The system sends a confirmation message to the user's email.
 7. The user verifies their account and is redirected to the login page.
 
+**Pre-conditions:**
+- The user must not be registered already.
+- The user must have valid email format and password that meets security requirements.
+
+**Post-conditions:**
+- A new user account is created.
+- User details are stored in the database.
+- A confirmation email is sent to the user.
+- 
 **Alternative Flow:**
 - **A1:** If the email is already in use, the system displays an error message and prompts the user to choose a different one.
 - **A2:** If the password does not meet security requirements, the system displays an error message.
@@ -85,6 +94,14 @@ Use Cases:
 3. If correct, the system logs the user in and displays their library.
 4. If incorrect, the system displays an error message.
 
+**Pre-conditions:**
+- The user must have a registered account.
+- The user must provide valid credentials.
+
+**Post-conditions:**
+- The user is logged in and has access to their library.
+- Session information is created and stored.
+
 **Alternative Flow:**
 - **A1:** If the credentials are incorrect, the system displays an error message.
 - **A2:** If the user forgets their password, they can reset it via email.
@@ -102,6 +119,13 @@ Use Cases:
 2. The system displays available games.
 3. The user can filter and search for games.
 4. The user clicks on a game to view more details.
+
+**Pre-conditions:**
+- The user must be logged in.
+
+**Post-conditions:**
+- The user is shown the available games list.
+- The user can view details of selected games.
 
 **Alternative Flow:**
 - **A1:** If no games are available, the system displays a message saying "No games available."
@@ -121,6 +145,15 @@ Use Cases:
 4. The system processes the payment and adds the game to the library.
 5. The user receives a confirmation email.
 
+**Pre-conditions:**
+- The user must have sufficient balance or payment method available.
+- The game must be available for purchase.
+
+**Post-conditions:**
+- The user’s library is updated with the newly purchased game.
+- The payment is processed successfully.
+- A confirmation email is sent to the user.
+
 **Alternative Flow:**
 - **A1:** If the payment fails, the system displays an error message and prompts for re-entry.
 
@@ -137,6 +170,14 @@ Use Cases:
 2. The user searches for and sends friend requests.
 3. The recipient accepts or rejects the request.
 4. If accepted, both users are added to each other's friends list.
+
+**Pre-conditions:**
+- The user must be logged in.
+- The recipient must have an active account.
+
+**Post-conditions:**
+- The user’s friends list is updated with the new friend.
+- The recipient’s friends list is updated if the request is accepted.
 
 **Alternative Flow:**
 - **A1:** If the user is already friends with the recipient, the system notifies them.
@@ -155,65 +196,33 @@ Use Cases:
 3. The system shows the achievements, tracking progress.
 4. The user can view unlocked achievements.
 
+**Pre-conditions:**
+- The user must be logged in.
+- The game must have achievements to track.
+
+**Post-conditions:**
+- The system displays the achievements related to the game.
+- The user can view unlocked achievements.
+
 **Alternative Flow:**
 - **A1:** If no achievements are unlocked, the system displays a message saying "No achievements unlocked."
 ---
 
 ## **3. Domain Model**
 
-### *3.1 Key Entities and Relationships*:
-
-1. **User**: Represents a registered user of the system.
-    - Attributes: `userID`, `username`, `email`, `password`, `library`, `friendsList`, `achievements`
-    - Relationships:
-        - A user has a **Library** (1-to-1 relationship).
-        - A user has many **Friends** (1-to-many relationship).
-        - A user has many **Achievements** (1-to-many relationship).
-
-2. **Game**: Represents a game in the store or the user’s library.
-    - Attributes: `gameID`, `name`, `description`, `price`, `genre`
-    - Relationships:
-        - A game can belong to many **Users** (many-to-many relationship) through the **Library**.
-
-3. **Library**: Represents the collection of games a user has purchased or owns.
-    - Attributes: `userID`, `games[]` (a collection of Game objects)
-    - Relationships:
-        - A user has a **Library** (1-to-1 relationship).
-
-4. **Achievement**: Represents an achievement in a game.
-    - Attributes: `achievementID`, `name`, `description`, `gameID`
-    - Relationships:
-        - An achievement is associated with a **Game** (1-to-many relationship).
-
-5. **Friend**: Represents a user’s friend in the system.
-    - Attributes: `friendID`, `friendUsername`
-    - Relationships:
-        - A user has many **Friends** (many-to-many relationship).
-
-6. **Payment**: Represents the payment information for a game purchase.
-    - Attributes: `paymentID`, `amount`, `paymentMethod`, `status`
-    - Relationships:
-        - A user makes many **Payments** (1-to-many relationship).
-
-7. **Email**: Represents the email service used for sending notifications.
-    - Attributes: `emailID`, `recipient`, `subject`, `body`
-    - Relationships:
-        - A **Payment** triggers an **Email** for confirmation (1-to-1 relationship).
-
-
-
-### **3.2 Domain Model Diagram**
+### **3.1 Domain Model Diagram**
 
 ![Domain Model.png](../Diagrams/Domain%20Model/PNG/Domain%20Model.png)
 
-### **3.3 Explanation of the Diagram:**
+### **3.2 Explanation of the Diagram:**
 
-- **User**: The user is at the center of the system and has attributes like `userID`, `username`, `email`, and more. They have many relationships, such as owning a **Library**, having **Friends**, and earning **Achievements**.
+- **User**: The user is at the center of the system and has many relationships, such as owning a **Library**, having **Friends**, and earning **Achievements**.
 - **Game**: Games are associated with users via the **Library** and have attributes like `gameID`, `name`, and `price`. A game contains many **Achievements**.
 - **Library**: A **Library** is owned by the user and contains a list of **Games**.
 - **Achievement**: Achievements are linked to specific **Games** and are earned by users.
 - **Friend**: Users can have many **Friends**, and the relationship is many-to-many.
 - **Payment**: A user makes payments for games, and each payment triggers an **Email** notification.
+- **Email**: The **Payment** entity triggers an **Email** for confirmation.
 
 ---
 ### **4. System Sequence Diagrams (SSDs)**
