@@ -1,0 +1,18 @@
+@startuml
+start
+
+:User visits registration page;
+:User enters required information (username, email, password);
+
+:System validates input;
+
+if (Validation successful?) then (yes)
+  :System creates new user account;
+  :System sends confirmation email;
+  :User activates account via email link;
+else (no)
+  :Display error message;
+endif
+
+stop
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+[*] --> Homepage
+
+Homepage --> Library : Navigate to library
+Library --> GameDetails : Select a game
+GameDetails --> Purchase : Buy the game
+Purchase --> Library : Game added to library
+Library --> [*] : Exit to homepage
+
+@enduml
+

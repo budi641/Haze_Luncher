@@ -1,0 +1,173 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' === Frontend Layer ===
+class LoginPage {
+  -username: String
+  -password: String
+  +login(): void
+  +forgotPassword(): void
+}
+
+class LibraryPage {
+  -userId: int
+  +displayGames(): void
+  +launchGame(gameId: int): void
+}
+
+class GamePage {
+  -gameId: int
+  +viewDetails(): void
+  +purchase(): void
+}
+
+class NewsPage {
+  -newsList: List<News>
+  +displayNews(): void
+}
+
+' === Backend Layer ===
+abstract class BaseController {
+  +logRequest(): void
+}
+
+class UserController extends BaseController {
+  +registerUser(userDto: UserDto): User
+  +loginUser(username: String, password: String): String
+}
+
+class GameController extends BaseController {
+  +getAllGames(): List<Game>
+  +purchaseGame(userId: int, gameId: int): Receipt
+}
+
+class PaymentController extends BaseController {
+  +processPayment(paymentDto: PaymentDto): Receipt
+}
+
+class AchievementController extends BaseController {
+  +getUserAchievements(userId: int): List<Achievement>
+}
+
+class FriendshipController extends BaseController {
+  +sendFriendRequest(senderId: int, receiverId: int): void
+  +acceptFriendRequest(requestId: int): void
+}
+
+' === Domain Layer ===
+abstract class BaseEntity {
+  -id: int
+  -createdAt: Date
+  -updatedAt: Date
+}
+
+class User extends BaseEntity {
+  -username: String
+  -password: String
+  -email: String
+  +getProfile(): UserProfile
+}
+
+class Game extends BaseEntity {
+  -name: String
+  -description: String
+  -price: float
+  +getDetails(): GameDetails
+}
+
+class Payment extends BaseEntity {
+  -userId: int
+  -gameId: int
+  -amount: float
+}
+
+class Achievement extends BaseEntity {
+  -userId: int
+  -gameId: int
+  -description: String
+  -dateUnlocked: Date
+}
+
+class FriendRequest extends BaseEntity {
+  -senderId: int
+  -receiverId: int
+  -status: String
+}
+
+' === Example Inheritance ===
+abstract class GameType {
+  +getGenre(): String
+  +play(): void
+}
+
+class RPG extends GameType {
+  +getQuestLog(): List<String>
+  +play(): void
+}
+
+class FPS extends GameType {
+  +getLoadout(): List<String>
+  +play(): void
+}
+
+' === Persistence Layer ===
+abstract class BaseEntityPersistence {
+  +id: int
+  +createdAt: Date
+  +updatedAt: Date
+}
+
+class UserEntity extends BaseEntityPersistence {
+  +username: String
+  +password: String
+  +email: String
+}
+
+class GameEntity extends BaseEntityPersistence {
+  +name: String
+  +description: String
+  +price: float
+}
+
+class PaymentEntity extends BaseEntityPersistence {
+  +userId: int
+  +gameId: int
+  +amount: float
+}
+
+class AchievementEntity extends BaseEntityPersistence {
+  +userId: int
+  +gameId: int
+  +description: String
+  +dateUnlocked: Date
+}
+
+class FriendRequestEntity extends BaseEntityPersistence {
+  +senderId: int
+  +receiverId: int
+  +status: String
+}
+
+' === Relationships ===
+LoginPage --> UserController : "login"
+LibraryPage --> GameController : "view library"
+GamePage --> GameController : "purchase game"
+NewsPage --> GameController : "fetch news"
+
+UserController --> User : "manages"
+GameController --> Game : "manages"
+PaymentController --> Payment : "processes"
+AchievementController --> Achievement : "manages"
+FriendshipController --> FriendRequest : "handles"
+
+Game --|> GameType : "inherits"
+RPG --> Game : "example RPG game"
+FPS --> Game : "example FPS game"
+
+User --> UserEntity : "persisted as"
+Game --> GameEntity : "persisted as"
+Payment --> PaymentEntity : "persisted as"
+Achievement --> AchievementEntity : "persisted as"
+FriendRequest --> FriendRequestEntity : "persisted as"
+
+@enduml

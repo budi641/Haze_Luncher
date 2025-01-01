@@ -1,24 +1,13 @@
 @startuml
 actor User
-rectangle "Haze Launcher" {
-    usecase "Enter Email and Password" as UC1
-    usecase "Validate Credentials" as UC2
-    usecase "Grant Access" as UC3
-    usecase "Display Error Message" as UC4
-    usecase "Forgot Password" as UC5
-    usecase "Send Password Reset Link" as UC6
-}
+boundary LoginUI
+control LoginController
+entity UserDatabase
 
-User --> UC1: Provides email and password
-UC1 --> UC2: Passes data for validation
-
-UC2 --> UC3: If valid credentials
-UC2 --> UC4: If invalid credentials
-
-UC3 --> User: Grants access and displays library
-UC4 --> User: Displays error message
-
-User --> UC5: Clicks "Forgot Password" (if needed)
-UC5 --> UC6: Requests password reset link
-UC6 --> User: Receives reset instructions
+User -> LoginUI: Enter credentials
+LoginUI -> LoginController: Send login request
+LoginController -> UserDatabase: Query user by credentials
+UserDatabase --> LoginController: User data (or error)
+LoginController -> LoginUI: Authentication result
+LoginUI -> User: Display result
 @enduml

@@ -1,0 +1,16 @@
+@startuml
+start
+
+:User plays a game and achieves a milestone;
+:System tracks user progress in the game;
+
+if (Achievement condition met?) then (yes)
+  :System unlocks achievement;
+  :System updates achievement status;
+  :Achievement is added to user's profile;
+else (no)
+  :System continues tracking progress;
+endif
+
+stop
+@enduml

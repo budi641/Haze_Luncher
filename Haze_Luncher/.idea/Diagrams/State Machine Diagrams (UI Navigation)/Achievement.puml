@@ -1,0 +1,9 @@
+@startuml
+[*] --> NoAchievements
+
+NoAchievements --> GameProgress : User plays the game
+GameProgress --> AchievementUnlocked : Milestone reached
+AchievementUnlocked --> GameProgress : Track new progress
+AchievementUnlocked --> [*] : Achievement unlocked
+
+@enduml

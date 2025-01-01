@@ -1,0 +1,18 @@
+@startuml
+start
+
+:User navigates to game catalog;
+:User selects a game to purchase;
+
+if (Game Available?) then (yes)
+  :System checks game availability;
+  :Proceed to payment gateway;
+  :System processes payment and confirms transaction;
+  :Add game to library;
+  :System sends confirmation email;
+else (no)
+  :Display out of stock message;
+endif
+
+stop
+@enduml
