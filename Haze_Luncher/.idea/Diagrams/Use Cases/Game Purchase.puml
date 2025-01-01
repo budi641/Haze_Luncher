@@ -1,18 +1,17 @@
 @startuml
 actor User
-rectangle "Haze Launcher" {
-    usecase "Select Game to Purchase" as UC1
-    usecase "Display Game Price and Purchase Options" as UC2
-    usecase "Choose Payment Method" as UC3
-    usecase "Process Payment" as UC4
-    usecase "Add Game to Library" as UC5
-    usecase "Send Purchase Confirmation Email" as UC6
-}
+boundary GameUI
+control PurchaseController
+entity GameDatabase
+entity PaymentGateway
 
-User --> UC1: Selects a game to purchase
-UC1 --> UC2: View game price and options
-User --> UC3: Chooses payment method
-UC3 --> UC4: Process payment
-UC4 --> UC5: Add game to user's library
-UC5 --> UC6: Send purchase confirmation email
+User -> GameUI: Select game to purchase
+GameUI -> PurchaseController: Send purchase request
+PurchaseController -> GameDatabase: Check game availability
+GameDatabase --> PurchaseController: Availability status
+PurchaseController -> PaymentGateway: Process payment
+PaymentGateway --> PurchaseController: Payment confirmation
+PurchaseController -> GameDatabase: Update user's game library
+PurchaseController -> GameUI: Purchase success message
+GameUI -> User: Display purchase confirmation
 @enduml

@@ -289,9 +289,67 @@ This interaction diagram illustrates how a user purchases a game, with the **UI*
 
 ---
 
-## **6. Improvement Summary (Iteration 2)**
+# **6. Fully Dressed Use Cases**
 
-We enhanced the SRS and SDS by adding interaction diagrams and specifying pre- and post-conditions to the sequence diagrams, ensuring a clearer understanding of system behavior during different use cases. Additionally, we refined the domain model by removing the entities, focusing solely on the core business logic and their relationships, which simplified the overall design and made it more aligned with the system's functional requirements. These changes improve the clarity and precision of the design while ensuring better traceability of system interactions.
+### **6.1 User Login**
+
+**Goal**: Allow users to securely access their accounts.
+
+**Actors**: User, System
+
+**Preconditions**:
+
+- User is registered in the system.
+- The system is operational.
+
+**Main Flow**:
+
+1. User enters username and password.
+2. System validates credentials against the database.
+3. If valid, the user is granted access to their account.
+
+**Alternate Flows**:
+
+- Invalid Credentials: Prompt the user to re-enter details.
+- Account Locked: Notify the user and direct to support.
+
+**Postconditions**:
+
+- User is authenticated and navigates to the dashboard.
+
+
+
+  ![UserLogin.png](assets/User Login.png)
+
+### **6.2 Game Purchase**
+
+**Goal**: Facilitate the purchase of a game.
+
+**Actors**: User, Payment Gateway, System
+
+**Preconditions**:
+
+- User is logged in.
+- Game is available for purchase.
+
+**Main Flow**:
+
+1. User selects a game and clicks "Buy Now."
+2. System displays payment options.
+3. User completes payment through the gateway.
+4. System confirms payment and updates the user's library.
+
+**Alternate Flows**:
+
+- Payment Failure: Notify the user and retry.
+- Game Unavailable: Display error message.
+
+**Postconditions**:
+
+- Game is added to the user's library.
+
+
+![GamePurchase.png](assets/Game Purchase use case.png)
 
 ---
 
@@ -520,6 +578,12 @@ The **Logical Architecture** defines the structure and components of the **Haze 
 **Diagram:**
 
 ![Achievement.png](assets/Achievement.png)
+
+---
+
+## **Improvement Summary (Iteration 2)**
+
+We enhanced the SRS and SDS by adding interaction diagrams and specifying pre- and post-conditions to the sequence diagrams, ensuring a clearer understanding of system behavior during different use cases. Additionally, we refined the domain model by removing the entities, focusing solely on the core business logic and their relationships, which simplified the overall design and made it more aligned with the system's functional requirements. These changes improve the clarity and precision of the design while ensuring better traceability of system interactions.
 
 ---
 
